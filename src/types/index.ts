@@ -1,5 +1,6 @@
 export interface IUserItem {
-  id: string
+  id?: string
+  _id?: string
   name: string
   age: number
 }

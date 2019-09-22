@@ -15,7 +15,7 @@ class Mysql {
       if (err) {
         throw err
       }
-      log('db Connected...')
+      log('mysql connected...')
     })
     this.query = util.promisify(this.db.query).bind(this.db)
   }

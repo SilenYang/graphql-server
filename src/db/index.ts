@@ -1,3 +1,5 @@
-import mysql from './mysql'
+import mysqlIns from './mysql'
+import mongodb from './mongodb'
 
-export const mysqlIns = mysql
+export const mysql = mysqlIns
+export const mongo = mongodb
