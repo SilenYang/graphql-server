@@ -42,11 +42,7 @@ class MongoClient {
       const result = this.db.collection(tableName).find(json)
 
       result.toArray((err: Error, data: any) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(data)
-        }
+        err ? reject(err) : resolve(data)
       })
     })
   }
