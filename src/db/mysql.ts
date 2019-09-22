@@ -1,13 +1,13 @@
 import mysql from 'mysql'
 import { mysqlConfig } from '../config'
-import Debug from 'debug'
+import debug from 'debug'
 import util from 'util'
 
-const debug = Debug('graph:mysql')
+const log = debug('graph:mysql')
 
 class Mysql {
   private db: any
-  private querys: any
+  public query: any
 
   constructor(config: typeof mysqlConfig) {
     this.db = mysql.createConnection(config)
@@ -15,19 +15,15 @@ class Mysql {
       if (err) {
         throw err
       }
-      debug('db Connected...')
+      log('db Connected...')
     })
-    this.querys = util.promisify(this.db.query).bind(this.db)
-  }
-
-  query = (sql: string, params = []) => {
-    return this.querys(sql, params)
+    this.query = util.promisify(this.db.query).bind(this.db)
   }
 
   destory = () => {
     this.db.end((err: any) => {
       if (err) {
-        debug('close db connect failed')
+        log('close db connect failed')
         throw err
       }
     })

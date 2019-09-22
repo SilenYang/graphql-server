@@ -2,10 +2,10 @@ import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 import staticSource from 'koa-static'
 import path from 'path'
-import Debug from 'debug'
+import debug from 'debug'
 import router from './routers'
 
-const debug = Debug('graph:index')
+const log = debug('graph:index')
 
 const app = new Koa()
 
@@ -17,4 +17,4 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 
 app.listen(3000)
-debug('server listen on port: 3000')
+log('server listen on port: 3000')

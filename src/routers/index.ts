@@ -1,19 +1,21 @@
-import Router from 'koa-router'
-import db from '../db/mysql'
-import Debug from 'debug'
-const debug = Debug('graph:router')
+import Router, { RouterContext } from 'koa-router'
+import { mysqlIns } from '../db'
+import debug from 'debug'
+import { IUserItem } from 'types'
+
+const log = debug('graph:router')
 
 const route = new Router()
 
 route.prefix('/test')
 
-route.get('/users', async (ctx: any, next: any) => {
-  const result = await db.query('select * from user_info')
-  debug('get users')
-  debug(result)
-  ctx.body = {
+route.get('/users', async (ctx: RouterContext, next: any) => {
+  const result: IUserItem[] = await mysqlIns.query('select * from user_info')
+  log('get users')
+  log(result)
+  ctx.ctx.body = {
     code: 200,
-    data: true,
+    data: result,
     message: 'ok'
   }
 })
