@@ -5,6 +5,8 @@ import path from "path";
 import debug from "debug";
 import router from "./routers";
 import { RouterContext } from "koa-router";
+import { ApolloServer, gql } from "apollo-server-koa";
+import schema from "./graphql";
 
 const log = debug("graph:index");
 
@@ -19,8 +21,14 @@ app.use(async (ctx: RouterContext, next: any) => {
   await next();
 });
 
-app.use(router.routes());
-app.use(router.allowedMethods());
+app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(5000);
-log("server listen on port: 5000");
+const server = new ApolloServer({
+  schema,
+});
+
+// @ts-ignore
+server.applyMiddleware({ app });
+
+const port = 5000;
+app.listen(port, () => log(`server listen on port: ${port}`));

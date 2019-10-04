@@ -1,7 +1,8 @@
 import Router, { RouterContext } from "koa-router";
 import { mysql } from "../db";
 import debug from "debug";
-import { IUserItem } from "types";
+import { IUserItem } from "../types";
+import schema from "../graphql/schemas/user";
 
 const log = debug("graph:router");
 
@@ -17,7 +18,7 @@ route.get("/users", async (ctx: RouterContext, next: any) => {
   ctx.body = {
     code: 200,
     data: result,
-    message: "ok"
+    message: "ok",
   };
 });
 
