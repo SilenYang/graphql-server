@@ -52,6 +52,7 @@ const userLists = {
   name: "query user list",
   type: new GraphQLList(userInfoType),
   args: {},
+  description: "用户列表",
   async resolve(root: any, params: any, options: any) {
     return await mysql.query(`select * from user_info`);
   },
@@ -59,6 +60,7 @@ const userLists = {
 
 // 根据id查询单个user数据
 const userInfo = {
+  name: "query user info",
   type: userInfoType,
   // 传进来的参数
   args: {
@@ -67,6 +69,7 @@ const userInfo = {
       type: new GraphQLNonNull(GraphQLID), // 参数不为空
     },
   },
+  description: "用户详情",
   async resolve(root: any, params: any, options: any) {
     return await mysql
       .query(`select * from user_info where id = ?`, [params.id])
