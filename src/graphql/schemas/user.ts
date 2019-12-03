@@ -15,10 +15,13 @@ const log = debug("graph:schema:user");
 // 定义user的数据类型
 export const userInfoType = new GraphQLObjectType({
   name: "userInfoType",
-  description: "用户详情",
+  description: "user meta",
   fields: {
-    id: {
+    _id: {
       type: GraphQLID,
+    },
+    id: {
+      type: GraphQLString,
     },
     name: {
       type: GraphQLString,
