@@ -1,28 +1,33 @@
-import user from "./schemas/user";
+import user from "./query/user";
+import todo from "./query/todolist";
+import * as todoMutation from "./mutations/todolist";
 
 const { GraphQLSchema, GraphQLObjectType } = require("graphql");
 
 //总查询对象
-const queryObj = new GraphQLObjectType({
-  name: "query",
+const querys = new GraphQLObjectType({
+  name: "Query",
   fields: () => ({
     userLists: user.userLists,
     userInfo: user.userInfo,
+    todolist: todo.todoLists,
+    todoInfo: todo.todoInfo,
   }),
 });
 
 //总体变更对象
-// const mutationObj = new GraphQLObjectType({
-//   name: "Mutation",
-//   fields: () => ({
-//     postLogin: postLogin,
-//   }),
-// });
+const mutations = new GraphQLObjectType({
+  name: "Mutation",
+  fields: () => ({
+    update: todoMutation.updateTodo,
+    add: todoMutation.addTodo,
+  }),
+});
 
 //GraphQL总表
 const schema = new GraphQLSchema({
-  query: queryObj,
-  //   mutation: mutationObj,
+  query: querys,
+  mutation: mutations,
 });
 
 export default schema;

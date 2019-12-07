@@ -9,48 +9,14 @@ import {
 
 import { mysql } from "../../db";
 import debug from "debug";
+import { userMetaType } from "../types";
 
-const log = debug("graph:schema:user");
-
-// 定义user的数据类型
-export const userInfoType = new GraphQLObjectType({
-  name: "userInfoType",
-  description: "用户详情",
-  fields: {
-    id: {
-      type: GraphQLID,
-    },
-    name: {
-      type: GraphQLString,
-    },
-    nickname: {
-      type: GraphQLString,
-    },
-    age: {
-      type: GraphQLInt,
-    },
-    phone: {
-      type: GraphQLString,
-    },
-    password: {
-      type: GraphQLString,
-    },
-    avatar: {
-      type: GraphQLString,
-    },
-    country: {
-      type: GraphQLString,
-    },
-    sex: {
-      type: GraphQLInt,
-    },
-  },
-});
+const log = debug("graph:query:user");
 
 // 批量查询
 const userLists = {
   name: "query user list",
-  type: new GraphQLList(userInfoType),
+  type: new GraphQLList(userMetaType),
   args: {},
   description: "用户列表",
   async resolve(root: any, params: any, options: any) {
@@ -61,7 +27,7 @@ const userLists = {
 // 根据id查询单个user数据
 const userInfo = {
   name: "query user info",
-  type: userInfoType,
+  type: userMetaType,
   // 传进来的参数
   args: {
     id: {
