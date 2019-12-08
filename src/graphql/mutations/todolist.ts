@@ -83,10 +83,11 @@ const addTodo = {
   },
   resolve: async (value: any, args: IUpdateParams) => {
     log(JSON.stringify(args.params));
+
     const params = args.params;
     const result: sqlInsertResponse = await mysql.query(
-      `insert into todoLists (title, expiredTime, createTime, description) values (?, ?, ?, ?)`,
-      [params.title, params.expiredTime, moment().format("YYYY-MM-DD"), params.description]
+      `insert into todoLists (title, expiredTime, description, createTime) values (?, ?, ?, ?)`,
+      [params.title, params.expiredTime, params.description, moment().format("YYYY-MM-DD")]
     );
     return {
       id: result.insertId,
