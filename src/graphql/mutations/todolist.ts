@@ -11,6 +11,7 @@ import debug from "debug";
 import { mysql } from "../../db";
 import moment from "moment";
 import { sqlInsertResponse } from "../../types";
+import { todoMetaType } from "../types";
 
 const log = debug("graph:mutation:todolist");
 
@@ -20,16 +21,10 @@ interface IUpdateParams {
     title: string;
     expiredTime: string;
     description: string;
+    createTime: string;
+    checked?: boolean;
   };
 }
-
-const outputType = new GraphQLObjectType({
-  name: "output",
-  fields: {
-    id: { type: GraphQLString },
-    success: { type: GraphQLBoolean },
-  },
-});
 
 const inputType = new GraphQLInputObjectType({
   name: "inputMeta",
@@ -45,7 +40,7 @@ const inputType = new GraphQLInputObjectType({
 
 const updateTodo = {
   name: "update",
-  type: outputType,
+  type: todoMetaType,
   description: "update todo",
   args: {
     params: { type: inputType },
@@ -59,15 +54,15 @@ const updateTodo = {
     );
     log(result);
     return {
-      id: params.id,
       success: true,
+      ...params,
     };
   },
 };
 
 const addTodo = {
   name: "add",
-  type: outputType,
+  type: todoMetaType,
   description: "add a todo",
   args: {
     params: {

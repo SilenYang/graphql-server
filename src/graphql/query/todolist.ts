@@ -13,6 +13,7 @@ const todoLists = {
   args: {},
   description: "待办列表",
   async resolve() {
+    // return Error("12122");
     return await mysql.query(`select * from todoLists`);
   },
 };

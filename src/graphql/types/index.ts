@@ -23,6 +23,9 @@ export const todoMetaType = new GraphQLObjectType({
     checked: {
       type: GraphQLBoolean,
     },
+    success: {
+      type: GraphQLBoolean,
+    },
   },
 });
 
