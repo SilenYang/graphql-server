@@ -21,6 +21,7 @@ const mutations = new GraphQLObjectType({
   fields: () => ({
     update: todoMutation.updateTodo,
     add: todoMutation.addTodo,
+    delete: todoMutation.deleteTodo,
   }),
 });
 

@@ -95,4 +95,33 @@ const addTodo = {
   },
 };
 
-export { updateTodo, addTodo };
+const deleteTodo = {
+  name: "delete",
+  type: todoMetaType,
+  description: "delete a todo",
+  args: {
+    params: {
+      type: new GraphQLInputObjectType({
+        name: "deleteId",
+        fields: {
+          id: { type: GraphQLID },
+        },
+      }),
+    },
+  },
+  resolve: async (value: any, args: IUpdateParams) => {
+    log(JSON.stringify(args.params));
+
+    const params = args.params;
+    const result: sqlInsertResponse = await mysql.query(`delete from todoLists where id = ?`, [
+      params.id,
+    ]);
+    log(result);
+    return {
+      id: params.id,
+      success: true,
+    };
+  },
+};
+
+export { updateTodo, addTodo, deleteTodo };
