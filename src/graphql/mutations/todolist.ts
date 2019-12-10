@@ -84,8 +84,12 @@ const addTodo = {
       `insert into todoLists (title, expiredTime, description, createTime) values (?, ?, ?, ?)`,
       [params.title, params.expiredTime, params.description, moment().format("YYYY-MM-DD")]
     );
+    const newTodo = (
+      await mysql.query("select * from todoLists where id = ?", [result.insertId])
+    )[0];
+    log(newTodo);
     return {
-      id: result.insertId,
+      ...newTodo,
       success: true,
     };
   },
